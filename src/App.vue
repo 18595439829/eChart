@@ -26,7 +26,13 @@
           dragChart
         </router-link>
       </li>
+      <li style="flex: 1">
+        <router-link :to="{name: 'step'}">
+          step
+        </router-link>
+      </li>
     </ul>
+    <hr>
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive"/>
     </keep-alive>
