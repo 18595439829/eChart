@@ -1,86 +1,108 @@
 <template>
   <div>
-    <div id="main"
-         style="width: 600px;height:400px;"></div>
+    <tree :data="data"></tree>
+    <div class="item">
+      <div class="title margin">订单时间</div>
+      <DatePicker v-model="data.startTime"
+                  :options="startTimeOptions"
+                  :value="data.date"
+                  type="date"
+                  placement="bottom-start"
+                  placeholder="请选择起始时间"
+                  @on-change="startTimeChange"
+                  style="width: 200px"></DatePicker>
+      -
+      <DatePicker v-model="data.endTime"
+                  :options="endTimeOptions"
+                  :value="data.date"
+                  type="date"
+                  placement="bottom-start"
+                  placeholder="请选择终止时间"
+                  @on-change="endTimeChange"
+                  style="width: 200px"></DatePicker>
+    </div>
   </div>
 </template>
 <script>
 export default {
-  methods: {
-    dragChart() {
-      var symbolSize = 20
-      var data = [[15, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]]
-      console.log('lll')
-      console.log('啦啦啦')
-      this.$echarts.init(document.getElementById('main')).setOption({
-        tooltip: {
-          triggerOn: 'none',
-          formatter: function(params) {
-            return (
-              'X: ' +
-              params.data[0].toFixed(2) +
-              '<br>Y: ' +
-              params.data[1].toFixed(2)
-            )
-          }
-        },
-        xAxis: {
-          min: -100,
-          max: 80,
-          type: 'value',
-          axisLine: { onZero: false }
-        },
-        yAxis: {
-          min: -30,
-          max: 60,
-          type: 'value',
-          axisLine: { onZero: false }
-        },
-        series: [
-          {
-            id: 'a',
-            type: 'line',
-            smooth: true,
-            symbolSize: symbolSize,
-            data: data
-          }
-        ]
-      })
-
-      this.$echarts.init(document.getElementById('main')).setOption({
-        graphic: this.$echarts.util.map(data, (item, dataIndex) => {
-          return {
-            type: 'circle',
-            position: this.$echarts.init(document.getElementById('main')).convertToPixel('grid', item),
-            shape: {
-              r: symbolSize / 2
+  data() {
+    return {
+      data: [],
+      data1: [
+        {
+          title: 'parent 1',
+          expand: true,
+          children: [
+            {
+              title: 'parent 1-1',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-1-1'
+                },
+                {
+                  title: 'leaf 1-1-2'
+                }
+              ]
             },
-            invisible: true,
-            draggable: true,
-            ondrag: this.$echarts.util.curry(onPointDragging, dataIndex),
-            onmousemove: this.$echarts.util.curry(showTooltip, dataIndex),
-            onmouseout: this.$echarts.util.curry(hideTooltip, dataIndex),
-            z: 100
-          }
-        })
-      })
-
-      window.addEventListener('resize', () => {
-        this.$echarts.init(document.getElementById('main')).setOption({
-          graphic: this.$echarts.util.map(data, (item, dataIndex) => {
-            return {
-              position: this.$echarts.init(document.getElementById('main')).convertToPixel('grid', item)
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
+                }
+              ]
             }
-          })
-        })
-      })
-
-     
+          ]
+        }
+      ],
+      /**
+       * 日期设置
+       */
+      startTimeOptions: {
+        disabledDate: date => {
+          return date && date.valueOf() > Date.now()
+        }
+      },
+      /**
+       * 日期设置
+       */
+      endTimeOptions: {
+        // 使用箭头函数
+        disabledDate: date => {
+          let startTime = this.data.startTime
+            ? new Date(this.data.startTime).valueOf() - 10 * 24 * 60 * 60 * 1000
+            : Date.now()
+          let endTime = this.data.startTime
+            ? new Date(this.data.startTime).valueOf()
+            : Date.now()
+          return (
+            (date && date.valueOf() < startTime) || date.valueOf() > endTime
+          )
+        }
+      }
+    }
+  },
+  methods: {
+    startTimeChange(e) {
+      console.log('this', this, e)
+      this.data.startTime = e
+      this.startTimeOptions = {
+        disabledDate(date) {
+          return date && date.valueOf() > Date.now()
+        }
+      }
+    },
+    endTimeChange(e) {
+      this.data.endTime = e
     }
   },
   created() {
-    console.log('$echarts', this.$echarts)
-    this.dragChart()
+    this.data = this.data1
   }
 }
 </script>
