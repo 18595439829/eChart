@@ -13,9 +13,6 @@
       <Step title="步骤3"
             icon="log-out"
             @click="current=2"></Step>
-      <Step title="步骤4"
-            icon="plus"
-            @click="current=3"></Step>
     </Steps>
     <!-- <Tabs>
         <TabPane label="标签一"><step1  @second="second"></step1></TabPane>
