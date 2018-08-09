@@ -14,20 +14,15 @@
             icon="log-out"
             @click="current=2"></Step>
     </Steps>
-    <!-- <Tabs>
-        <TabPane label="标签一"><step1  @second="second"></step1></TabPane>
-        <TabPane label="标签二"><step2  @third="third"></step2></TabPane>
-        <TabPane label="标签三"><step3 ></step3></TabPane>
-    </Tabs> -->
     <Button type="primary"
             @click="next">Next step</Button>
     <transition name="fade"
                 mode="out-in">
       <step1 v-if="current == 0"
              @second="second" key="step1"></step1>
-      <step2 v-else-if="current == 1"
+      <step2 v-if="current == 1"
              @third="third" key="step2"></step2>
-      <step3 v-else-if="current == 2" key="step3"></step3>
+      <step3 v-if="current == 2" key="step3"></step3>
     </transition>
     <hr>
     <Progress :percent="percent"></Progress>
@@ -53,8 +48,7 @@ export default {
   },
   methods: {
     next() {
-      console.log('this', this)
-      if (this.current == 3) {
+      if (this.current == 2) {
         this.current = 0
       } else {
         this.current += 1
@@ -84,4 +78,13 @@ export default {
 }
 </script>
 <style scoped>
+  /* .fade-enter, .fade-leave-to{
+    transition: all 1s ease
+  } */
+  /* .fade-enter-active {
+    transition: all .3s ease;
+  }
+  .fade-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  } */
 </style>

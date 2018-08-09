@@ -10,12 +10,12 @@ import 'echarts/map/js/china.js'
 import 'iview/dist/styles/iview.css'
 
 Vue.config.productionTip = false
-Vue.prototype.$echarts = eCharts 
+Vue.prototype.$echarts = eCharts
 Vue.use(iView)
-/* eslint-disable no-new */
+    /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+    el: '#app',
+    router,
+    components: { App },
+    template: '<App/>'
 })

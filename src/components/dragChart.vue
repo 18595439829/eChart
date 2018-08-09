@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dragChart">
     <tree :data="data"></tree>
     <div class="item">
       <div class="title margin">订单时间</div>
@@ -21,9 +21,14 @@
                   @on-change="endTimeChange"
                   style="width: 200px"></DatePicker>
     </div>
+    <input type="text"  v-model="copyValue">
+    <Button class="tag-read"
+            :data-clipboard-text="copyValue"
+            @click="copy">点击复制</Button>
   </div>
 </template>
 <script>
+import Clipboard from 'clipboard'
 export default {
   data() {
     return {
@@ -42,6 +47,114 @@ export default {
                 },
                 {
                   title: 'leaf 1-1-2'
+                }
+              ]
+            },
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
+                }
+              ]
+            },
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
+                }
+              ]
+            },
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
+                }
+              ]
+            },
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
+                }
+              ]
+            },
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
+                }
+              ]
+            },
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
+                }
+              ]
+            },
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
+                }
+              ]
+            },
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
+                }
+              ]
+            },
+            {
+              title: 'parent 1-2',
+              expand: true,
+              children: [
+                {
+                  title: 'leaf 1-2-1'
+                },
+                {
+                  title: 'leaf 1-2-1'
                 }
               ]
             },
@@ -84,7 +197,8 @@ export default {
             (date && date.valueOf() < startTime) || date.valueOf() > endTime
           )
         }
-      }
+      },
+      copyValue: ''
     }
   },
   methods: {
@@ -99,6 +213,25 @@ export default {
     },
     endTimeChange(e) {
       this.data.endTime = e
+    },
+    copy(event) {
+      var clipboard = new Clipboard('.tag-read')
+      console.log('clipboard', event)
+      clipboard.on('success', e => {
+        console.log('复制成功')
+        this.$Message.config({
+            top: event.clientY
+        })
+        this.$Message.success('复制成功')
+        // 释放内存
+        clipboard.destroy()
+      })
+      clipboard.on('error', e => {
+        // 不支持复制
+        console.log('该浏览器不支持自动复制')
+        // 释放内存
+        clipboard.destroy()
+      })
     }
   },
   created() {
@@ -106,5 +239,8 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+.dragChart {
+  padding-bottom: 300px;
+}
 </style>
