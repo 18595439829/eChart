@@ -31,6 +31,11 @@
           step
         </router-link>
       </li>
+      <li style="flex: 1">
+        <router-link :to="{name: 'myECharts'}">
+          myECharts
+        </router-link>
+      </li>
     </ul>
     <hr>
     <keep-alive>

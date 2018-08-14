@@ -5,6 +5,7 @@ import MapChart from '../components/mapChart'
 import AsyncChart from '../components/asyncChart'
 import SelectIpt from '../components/selectIpt'
 import DragChart from '../components/dragChart'
+import MyECharts from '../components/myECharts'
 import Step from '../components/step'
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
             path: '/step',
             name: 'step',
             component: Step
+        },
+        {
+            path: '/myECharts',
+            name: 'myECharts',
+            component: MyECharts
         }
     ]
 })

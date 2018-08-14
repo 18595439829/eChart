@@ -21,7 +21,7 @@
                   @on-change="endTimeChange"
                   style="width: 200px"></DatePicker>
     </div>
-    <input type="text"  v-model="copyValue">
+    <Input type="text"  v-model="copyValue" ref="ipt" ></Input>
     <Button class="tag-read"
             :data-clipboard-text="copyValue"
             @click="copy">点击复制</Button>
@@ -232,6 +232,7 @@ export default {
         // 释放内存
         clipboard.destroy()
       })
+      this.$refs.ipt.focus()
     }
   },
   created() {
